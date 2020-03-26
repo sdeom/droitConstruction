@@ -1,11 +1,157 @@
-\documentclass[10pt,a4paper]{book}
+\documentclass[10pt,a4paper,twoside]{book}
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[french]{babel}
+%\usepackage{lmodern} % Police un peu plus jolie
+\usepackage{isodate}
+\usepackage{enumitem} % Pour personnaliser les listes
 \usepackage{graphicx}
+\usepackage{eurosym}
+\usepackage{xspace}
+\usepackage{moredefs}\usepackage[mla]{lips}
+\usepackage[autolanguage]{numprint}
 \usepackage[left=4.00cm]{geometry}
+\usepackage[french]{babel}
+\usepackage{hyperref}
+
 \author{Adrien Pelon}
 \title{Droit de la construction}
+
+\hypersetup{%
+	pdfinfo={%
+		Title={Droit de la construction}%
+		, Subject={}%Marché \@ReferenceMarche}%
+		, Author={Samuel Déom}%
+		, Keywords={}%\@ReferenceMarche}%
+	}%
+	, colorlinks = true% colore, plutot qu'encadre, les liens hypertexte
+	, linkcolor = black% colore les liens internes en noir
+	, urlcolor = black% colore les liens externes en noir
+	, breaklinks = true% autorise les liens à être étendus sur plusieurs lignes
+}
+
+% Les acteurs
+\newcommand*{\Mo}{Maître de l'Ouvrage\xspace}
+\newcommand*{\Moe}{Maître d'Œuvre\xspace}
+\newcommand*{\lo}{locateur d'ouvrage\xspace}
+\newcommand*{\archi}{architecte\xspace}
+\newcommand*{\E}{Entrepreneur\xspace}
+\newcommand*{\GME}{groupement momentané d'entreprises\xspace}
+\newcommand*{\CSPS}{\textsc{csps}\xspace}
+\newcommand*{\HLM}{HLM\xspace}
+\newcommand*{\SEM}{SEM\xspace}
+
+% Ecrire du texte juridique
+\newcommand*{\CE}{Conseil d'État\xspace}
+\newcommand*{\CourDeCas}{Cour de Cassation\xspace}
+\newcommand*{\civTrois}{civ. 3\ieme{}}
+
+\newcommand*{\jurisCourDeCas}[3]% Numéro de chambre, date et en option no de pourvoi
+[]%par défaut pas de numéro de pourvoi
+{Cass. #2, \printdate{#3} #1}
+
+\newcommand*{\articleCodifie}[2]{article~#1.\,#2}
+
+\newcommand*{\cchLong}{Code de la construction et de l'habitation\xspace}
+\newcommand*{\cchAbrege}{CCH\xspace}
+\makeatletter
+\newcommand*{\cch}{\@ifstar{\cchAbrege}{\cchLong}}
+\makeatother
+\newcommand*{\articleCchLong}[2]{\articleCodifie{#1}{#2} du \cchLong}
+\newcommand*{\articleCchAbrege}[2]{\articleCodifie{#1}{#2} du \cchAbrege}
+\makeatletter
+\newcommand*{\articleCch}[2]{\@ifstar{\articleCchAbrege{#1}{#2}}{\articleCchLong{#1}{#2}}}
+\makeatother
+
+\newcommand*{\ccivLong}{Code civil\xspace}
+\newcommand*{\ccivAbrege}{c.~civ.\xspace}
+\makeatletter
+\newcommand*{\cciv}{\@ifstar{\ccivAbrege}{\ccivLong}}
+\makeatother
+\newcommand*{\articleCcivLong}[1]{article~#1 du \ccivLong}
+\newcommand*{\articleCcivAbrege}[1]{article~#1 du \ccivAbrege}
+\makeatletter
+\newcommand*{\articleCciv}[1]{\@ifstar{\articleCcivAbrege{#1}}{\articleCcivLong{#1}}}
+\makeatother
+
+\newcommand*{\cuLong}{Code de l'urbanisme\xspace}
+\newcommand*{\cuAbrege}{c.~urb.\xspace}
+\makeatletter
+\newcommand*{\cu}{\@ifstar{\cuAbrege}{\cuLong}}
+\makeatother
+\newcommand*{\articleCuLong}[2]{\articleCodifie{#1}{#2} du \cuLong}
+\newcommand*{\articleCuAbrege}[2]{\articleCodifie{#1}{#2} du \cuAbrege}
+\makeatletter
+\newcommand*{\articleCu}[3]{\@ifstar{\articleCuAbrege{#1}{#2}}{\articleCuLong{#1}{#2}}}
+\makeatother
+
+\newcommand*{\ccpLong}{Code de la commande publique\xspace}
+\newcommand*{\ccpAbrege}{CCP\xspace}
+\makeatletter
+\newcommand*{\ccp}{\@ifstar{\ccpAbrege}{\ccpLong}}
+\makeatother
+
+% Abbréviation ou sigle de la construction
+\newcommand*{\VEFA}{\textsc{vefa}\xspace}
+\newcommand*{\ccmi}{contrat de construction de maison individuelle\xspace}
+\newcommand*{\CCMI}{\textsc{ccmi}\xspace}
+\newcommand*{\ERP}{\textsc{erp}\xspace}
+\newcommand*{\IGH}{\textsc{igh}\xspace}
+
+\newcommand*{\dgd}{décompte général définitif\xspace}
+
+\newcommand*{\PC}{permis de construire\xspace}
+\newcommand*{\do}{dommage ouvrage\xspace}
+\newcommand*{\DO}{\textsc{do}\xspace}
+\newcommand*{\rcdc}{responsabilité contractuelle de droit commun\xspace}
+\newcommand*{\rcd}{responsabilité civile décennale\xspace}
+\newcommand*{\gpa}{garantie de parfait achèvement\xspace}
+\newcommand*{\dec}{garantie décennale\xspace}
+\newcommand*{\bi}{garantie de bon fonctionnement \mbox{(<< biennale >>)}\xspace}
+\newcommand*{\garSpec}{garanties spécifiques\xspace}
+\newcommand*{\lesGarSpec}{\gpa, \bi, et \dec\xspace}
+
+% Ecrire des quantités
+\newcommand*{\montant}[1]{\nombre{#1}~\euro}
+\newcommand*{\montantTtc}[1]{\montant{#1}~\textsc{ttc}}
+\newcommand*{\montantHt}[1]{\montant{#1}~\textsc{ht}}
+\newcommand*{\pourcent}[1]{\nombre{#1}\,\%}
+\newcommand*{\metreCarre}{m\up{2}}
+\newcommand*{\surface}[1]{\nombre{#1}~\metreCarre}
+
+% Abréviation et régles courantes
+\newcommand*{\etc}{\emph{etc.}\xspace}
+\newcommand*{\nom}[1]{\textsc{#1}}
+
+% Environnement
+\newenvironment*{conseil}{%
+	\par \medskip
+	Conseil :
+	\begin{quote}
+	\itshape	
+}{%
+	\end{quote}
+}
+
+\newenvironment*{citationArticle}[3]{%
+	\par\medskip\noindent\textbf{\articleCodifie{#1}{#2}} du {#3} :
+	\begin{quote}
+	<<	\itshape	
+	}{%
+	>>
+	\end{quote}
+}
+
+\newenvironment*{citationArticleCciv}[1]{%
+	\par\medskip\noindent\textbf{Article~#1} du \ccivLong :
+	\begin{quote}
+	<<	\itshape	
+	}{%
+	>>
+	\end{quote}
+}
+
+
 \begin{document}
 	\maketitle
 	
@@ -14,6 +160,14 @@
 	%\part*{Le droit commun de la construction}
 	
 	\part{Les contrats de construction}
+	
+		Le contrat de louage d'ouvrage --- ou contrat d'entrepreneur --- est défini par l'\articleCciv{1710}.
+		
+		\begin{citationArticleCciv}{1710}
+			Le louage d'ouvrage est un contrat par lequel l'une des parties s'engage à faire quelque chose pour l'autre, moyennant un prix convenu entre elles.
+		\end{citationArticleCciv}
+		
+		La \CourDeCas{} précise qu'il faut une rémunération et un travail effectué indépendamment.
 		
 		\include{01_contratEntrepreneur}
 		\include{02_contratArchitecte}
