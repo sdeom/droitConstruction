@@ -1,21 +1,37 @@
-\documentclass[10pt,a4paper,twoside]{book}
+\documentclass[10pt,a4paper,twoside]{report}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 %\usepackage{lmodern} % Police un peu plus jolie
-\usepackage{isodate}
 \usepackage{enumitem} % Pour personnaliser les listes
 \usepackage{graphicx}
 \usepackage{eurosym}
 \usepackage{xspace}
+\usepackage{makeidx}
 \usepackage{moredefs}\usepackage[mla]{lips}
 \usepackage[autolanguage]{numprint}
 \usepackage[left=4.00cm]{geometry}
-\usepackage[french]{babel}
+\usepackage[french]{babel, varioref, isodate}
 \usepackage{hyperref}
 
-\author{Adrien Pelon}
-\title{Droit de la construction}
+\author{Adrien \nom{Pelon}
+%	\begin{tiny}
+%		Avocat associé
+%
+%		Tél : 01 40 56 08 00
+%
+%		Fax : 01 42 19 06 35
+%
+%		\url{apavocats@orange.fr}\\
+%
+%		53 avenue de Breteuil
+%
+%		75007 Paris
+%
+%		\url{www.jpavocats.fr}
+%	\end{tiny}
+}
+\title{Master 2 \\ Droit de l’immobilier et de la construction\\Formation continue\\\bigskip{\Huge Droit de la construction}}
 
 \hypersetup{%
 	pdfinfo={%
@@ -32,164 +48,226 @@
 
 % Les acteurs
 \newcommand*{\Mo}{Maître de l'Ouvrage\xspace}
+\newcommand*{\MO}{\Mo}
 \newcommand*{\Moe}{Maître d'Œuvre\xspace}
 \newcommand*{\lo}{locateur d'ouvrage\xspace}
 \newcommand*{\archi}{architecte\xspace}
 \newcommand*{\E}{Entrepreneur\xspace}
+\newcommand*{\ep}{entrepreneur principal\xspace}
 \newcommand*{\GME}{groupement momentané d'entreprises\xspace}
 \newcommand*{\CSPS}{\textsc{csps}\xspace}
 \newcommand*{\HLM}{HLM\xspace}
 \newcommand*{\SEM}{SEM\xspace}
+\makeatletter
+\newcommand*{\ST}{\@ifstar{sous-traitance\xspace}{sous-traitant\xspace}}
+\makeatother
 
 % Ecrire du texte juridique
-\newcommand*{\CE}{Conseil d'État\xspace}
-\newcommand*{\CourDeCas}{Cour de Cassation\xspace}
-\newcommand*{\civTrois}{civ. 3\ieme{}}
-
-\newcommand*{\jurisCourDeCas}[3]% Numéro de chambre, date et en option no de pourvoi
-[]%par défaut pas de numéro de pourvoi
-{Cass. #2, \printdate{#3} #1}
-
-\newcommand*{\articleCodifie}[2]{article~#1.\,#2}
-
-\newcommand*{\cchLong}{Code de la construction et de l'habitation\xspace}
-\newcommand*{\cchAbrege}{CCH\xspace}
 \makeatletter
-\newcommand*{\cch}{\@ifstar{\cchAbrege}{\cchLong}}
-\makeatother
-\newcommand*{\articleCchLong}[2]{\articleCodifie{#1}{#2} du \cchLong}
-\newcommand*{\articleCchAbrege}[2]{\articleCodifie{#1}{#2} du \cchAbrege}
-\makeatletter
-\newcommand*{\articleCch}[2]{\@ifstar{\articleCchAbrege{#1}{#2}}{\articleCchLong{#1}{#2}}}
+\newcommand*{\assPlen}{\@ifstar{\mbox{ass. plén.}\xspace}{assemblée plénière\xspace}}
+\newcommand*{\civUn}{\@ifstar{civ. 1\iere{}\xspace}{première chambre civile\xspace}}
+\newcommand*{\civDeux}{\@ifstar{civ. 2\ieme{}\xspace}{deuxième chambre civile\xspace}}
+\newcommand*{\civTrois}{\@ifstar{civ. 3\ieme{}\xspace}{troisième chambre civile\xspace}}
+\newcommand*{\CourDeCas}{\@ifstar{Cass.\xspace}{Cour de Cassation\xspace}}
+\newcommand*{\CA}{\@ifstar{CA\xspace}{Cour d'Appel\xspace}}
+\newcommand*{\CE}{\@ifstar{CE\xspace}{Conseil d'État\xspace}}
 \makeatother
 
-\newcommand*{\ccivLong}{Code civil\xspace}
-\newcommand*{\ccivAbrege}{c.~civ.\xspace}
+\newcommand*{\jurisCourDeCas}[3][]{\CourDeCas* #2, \printdate{#3}\ifthenelse{\equal{#1}{}}{}{, \no#1}}% Numéro de chambre, date et en option no de pourvoi
+\newcommand*{\jurisCA}[2]{\CA* #1, \printdate{#2}}%Ville, date
+
+\newcommand*{\refArticle}[2]{#1.\,#2}
+\newcommand*{\articleCodifie}[2]{\mbox{article~\refArticle{#1}{#2}}}
+\newcommand*{\articlesCodifies}[2]{\mbox{articles~\refArticle{#1}{#2}}}
+\newcommand*{\ArticleCodifie}[2]{\mbox{Article~\refArticle{#1}{#2}}}
+\newcommand*{\ArticlesCodifies}[2]{\mbox{Articles~\refArticle{#1}{#2}}}
+\newcommand*{\articleDu}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{article~#2}}{\articleCodifie{#1}{#2}} du #3}
+\newcommand*{\articlesDu}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{articles~#2}}{\articlesCodifies{#1}{#2}} du #3}
+\newcommand*{\articlesDuEtSuivants}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{articles~#2}}{\articlesCodifies{#1}{#2}} et suivants du #3}
+\newcommand*{\ArticleDu}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{Article~#2}}{\ArticleCodifie{#1}{#2}} du #3}
+\newcommand*{\ArticlesDu}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{Articles~#2}}{\ArticlesCodifies{#1}{#2}} du #3}
+\newcommand*{\ArticlesDuEtSuivants}[3][]{\ifthenelse{\equal{#1}{}}{\mbox{Articles~#2}}{\ArticlesCodifies{#1}{#2}} et suivants du #3}
+
 \makeatletter
-\newcommand*{\cciv}{\@ifstar{\ccivAbrege}{\ccivLong}}
-\makeatother
-\newcommand*{\articleCcivLong}[1]{article~#1 du \ccivLong}
-\newcommand*{\articleCcivAbrege}[1]{article~#1 du \ccivAbrege}
-\makeatletter
-\newcommand*{\articleCciv}[1]{\@ifstar{\articleCcivAbrege{#1}}{\articleCcivLong{#1}}}
+\newcommand*{\ca}{\@ifstar{\mbox{C.~assur.}\xspace}{Code des assurances\xspace}}
+\newcommand*{\cch}{\@ifstar{CCH\xspace}{Code de la construction et de l'habitation\xspace}}
+\newcommand*{\cciv}{\@ifstar{\mbox{C.~civ.}\xspace}{Code civil\xspace}}
+\newcommand*{\ccom}{\@ifstar{\mbox{	C.~com.}\xspace}{Code du commerce\xspace}}
+\newcommand*{\ccons}{\@ifstar{\mbox{C.~consom.}\xspace}{Code de la consommation\xspace}}
+\newcommand*{\ccp}{\@ifstar{CCP\xspace}{Code de la commande publique\xspace}}
+\newcommand*{\cpc}{\@ifstar{CPC\xspace}{Code de procédure civile\xspace}}
+\newcommand*{\cpi}{\@ifstar{CPI\xspace}{Code de la propriété intellectuelle\xspace}}
+\newcommand*{\cu}{\@ifstar{\mbox{C.~urb.}\xspace}{Code de l'urbanisme\xspace}}
 \makeatother
 
-\newcommand*{\cuLong}{Code de l'urbanisme\xspace}
-\newcommand*{\cuAbrege}{c.~urb.\xspace}
-\makeatletter
-\newcommand*{\cu}{\@ifstar{\cuAbrege}{\cuLong}}
-\makeatother
-\newcommand*{\articleCuLong}[2]{\articleCodifie{#1}{#2} du \cuLong}
-\newcommand*{\articleCuAbrege}[2]{\articleCodifie{#1}{#2} du \cuAbrege}
-\makeatletter
-\newcommand*{\articleCu}[3]{\@ifstar{\articleCuAbrege{#1}{#2}}{\articleCuLong{#1}{#2}}}
-\makeatother
 
-\newcommand*{\ccpLong}{Code de la commande publique\xspace}
-\newcommand*{\ccpAbrege}{CCP\xspace}
-\makeatletter
-\newcommand*{\ccp}{\@ifstar{\ccpAbrege}{\ccpLong}}
-\makeatother
+\newcommand*{\indexCciv}[1]{}%\index{CodeCivil@Code civil!#1@article #1}}
+\newcommand*{\articleCciv}[1]{article~#1 du \indexCciv{#1}\cciv}
+\newcommand*{\ArticleCciv}[1]{Article~#1 du \indexCciv{#1}\cciv}
+\newcommand*{\articlesCciv}[1]{articles~#1 du \indexCciv{#1}\cciv}
+\newcommand*{\ArticlesCciv}[1]{Articles~#1 du \indexCciv{#1}\cciv}
+\newcommand*{\articlesCcivEtSuivants}[1]{articles~#1 et suivants du \indexCciv{#1}\cciv}
+
+\newcommand*{\qpc}{question prioritaire de constitutionnalité\xspace}
+
 
 % Abbréviation ou sigle de la construction
-\newcommand*{\VEFA}{\textsc{vefa}\xspace}
+\newcommand*{\ado}{assurance dommage-ouvrage\xspace}
+\newcommand*{\arcd}{assurance de responsabilité civile décennale\xspace}
+\newcommand*{\bi}{garantie de bon fonctionnement \mbox{(<< biennale >>)}\xspace}
 \newcommand*{\ccmi}{contrat de construction de maison individuelle\xspace}
+\newcommand*{\cnr}{constructeur non réalisateur\xspace}
+\newcommand*{\dec}{garantie décennale\xspace}
+\newcommand*{\dgd}{décompte général définitif\xspace}
+\newcommand*{\do}{dommage-ouvrage\xspace}
+\newcommand*{\garSpec}{garanties spécifiques\xspace}
+\newcommand*{\gpa}{garantie de parfait achèvement\xspace}
+\newcommand*{\lesGarSpec}{\gpa, \bi, et \dec\xspace}
+\newcommand*{\loiST}{loi du \printdate{31/12/1975}\xspace}
+\newcommand*{\rcd}{responsabilité civile décennale\xspace}
+\newcommand*{\rcdc}{responsabilité contractuelle de droit commun\xspace}
+\newcommand*{\vrd}{\textsc{vrd}\xspace}
 \newcommand*{\CCMI}{\textsc{ccmi}\xspace}
+\newcommand*{\DO}{\textsc{do}\xspace}
 \newcommand*{\ERP}{\textsc{erp}\xspace}
 \newcommand*{\IGH}{\textsc{igh}\xspace}
-
-\newcommand*{\dgd}{décompte général définitif\xspace}
-
 \newcommand*{\PC}{permis de construire\xspace}
-\newcommand*{\do}{dommage ouvrage\xspace}
-\newcommand*{\DO}{\textsc{do}\xspace}
-\newcommand*{\rcdc}{responsabilité contractuelle de droit commun\xspace}
-\newcommand*{\rcd}{responsabilité civile décennale\xspace}
-\newcommand*{\gpa}{garantie de parfait achèvement\xspace}
-\newcommand*{\dec}{garantie décennale\xspace}
-\newcommand*{\bi}{garantie de bon fonctionnement \mbox{(<< biennale >>)}\xspace}
-\newcommand*{\garSpec}{garanties spécifiques\xspace}
-\newcommand*{\lesGarSpec}{\gpa, \bi, et \dec\xspace}
+\newcommand*{\VEFA}{\textsc{vefa}\xspace}
 
 % Ecrire des quantités
 \newcommand*{\montant}[1]{\nombre{#1}~\euro}
 \newcommand*{\montantTtc}[1]{\montant{#1}~\textsc{ttc}}
 \newcommand*{\montantHt}[1]{\montant{#1}~\textsc{ht}}
 \newcommand*{\pourcent}[1]{\nombre{#1}\,\%}
-\newcommand*{\metreCarre}{m\up{2}}
+\newcommand*{\metreCarre}{m\up{2}\xspace}
 \newcommand*{\surface}[1]{\nombre{#1}~\metreCarre}
 
 % Abréviation et régles courantes
 \newcommand*{\etc}{\emph{etc.}\xspace}
+\newcommand*{\cad}{c'est-à-dire\xspace}
+\newcommand*{\lrar}{lettre recommandée avec accusé de réception\xspace}
+\newcommand*{\di}{dommages et intérêts\xspace}
+\newcommand*{\med}{mise en demeure\xspace}
+\newcommand*{\jp}{jurisprudence\xspace}
+\newcommand*{\pv}{procès-verbal\xspace}
+
+\newcommand*{\I}{\textsc{i}\xspace}
+\newcommand*{\II}{\textsc{ii}\xspace}
+\newcommand*{\III}{\textsc{iii}\xspace}
+
 \newcommand*{\nom}[1]{\textsc{#1}}
+
+\newcommand*{\aCompleter}{\colorbox{yellow}{\lips}\index{Trou dans le cours}\xspace}
+\newcommand*{\aVerifier}{\colorbox{yellow}{[\textsc{A vérifier}]}\index{A vérifier}\xspace}
+\newcommand*{\aValider}{\aVerifier}
+
+% Pour faciliter l'intégration des notes de Julie
+\newcommand*{\AD}{action directe}
+\newcommand*{\CAD}{\cad}
+\newcommand*{\DI}{\di}
+\newcommand*{\JP}{\jp}
+\newcommand*{\LRAR}{\lrar}
+\newcommand*{\MED}{\med}
+\newcommand*{\PPE}{principe\xspace}
+\newcommand*{\PV}{\pv}
+\newcommand*{\RC}{\textsc{RC}}
+\newcommand*{\TAV}{troubles anormaux de voisinage\xspace}
+
 
 % Environnement
 \newenvironment*{conseil}{%
-	\par \medskip
+	\medbreak
 	Conseil :
 	\begin{quote}
-	\itshape	
+	\itshape
 }{%
 	\end{quote}
 }
 
-\newenvironment*{citationArticle}[3]{%
-	\par\medskip\noindent\textbf{\articleCodifie{#1}{#2}} du {#3} :
-	\begin{quote}
-	<<	\itshape	
+\newenvironment*{exemple}{%
+		\smallbreak\itshape
+		Exemple :
 	}{%
-	>>
+		\smallbreak
+}
+
+\newenvironment*{citationArticle}[3][]{%
+	\medbreak\noindent\ifthenelse{\equal{#1}{}}{Article~#2}{\ArticleCodifie{#1}{#2}} du {#3} :
+	\begin{quote}
+		\parskip 6pt
+		<< \itshape
+	}{%
+		>>
+		\parskip 0pt
+	\end{quote}
+}
+
+\newenvironment*{citationArticleLoi}[3][]{%option n° de loi, n° article, date de la loi
+	\par\medbreak\textbf{Article #2 de la loi\ifthenelse{\equal{#1}{}}{}{ \no#1} du \printdate{#3}}
+	\begin{quote}
+		<< \itshape
+	}{ >>
 	\end{quote}
 }
 
 \newenvironment*{citationArticleCciv}[1]{%
-	\par\medskip\noindent\textbf{Article~#1} du \ccivLong :
-	\begin{quote}
-	<<	\itshape	
+	\begin{citationArticle}{#1}{\cciv}
 	}{%
-	>>
-	\end{quote}
+	\end{citationArticle}
 }
 
+\makeindex
+
+\setcounter{secnumdepth}{3}
 
 \begin{document}
 	\maketitle
-	
+
 	\include{00_operateurConstruction}
-	
+
 	%\part*{Le droit commun de la construction}
-	
+
 	\part{Les contrats de construction}
-	
+
 		Le contrat de louage d'ouvrage --- ou contrat d'entrepreneur --- est défini par l'\articleCciv{1710}.
-		
+
 		\begin{citationArticleCciv}{1710}
 			Le louage d'ouvrage est un contrat par lequel l'une des parties s'engage à faire quelque chose pour l'autre, moyennant un prix convenu entre elles.
 		\end{citationArticleCciv}
-		
+
 		La \CourDeCas{} précise qu'il faut une rémunération et un travail effectué indépendamment.
-		
+
 		\include{01_contratEntrepreneur}
 		\include{02_contratArchitecte}
 		\include{03_contratSousTraitance}
-		
+
 	\part{La responsabilité des constructeurs et des fabricants}
-	
+
 		\include{04_garantiesSpecifiques}
 		\include{05_responsabiliteDroitCommun}
 		\include{06_responsabiliteFabricants}
-	
+
 	\part{Les assurances construction}
-	
+
 		\include{07_assurancesObligatoires}
 		\include{08_assurancesFacultatives}
-	
+
 	\part{Le droit spécial de la construction}
-	
+
 		\include{09_vefa}
 		\include{10_viar}
 		\include{11_maisonIndividuelle}
-		
+
+	\part{Annexes}
+
+		\include{21_definition}
+		\include{22_cnr}
+
+	\clearpage\pdfbookmark[-1]{Table des matières}{toc}
+	\setcounter{tocdepth}{4}
 	\tableofcontents
-	
+
+	\clearpage\pdfbookmark[-1]{Index}{index}
+	\printindex
+
 \end{document}

@@ -4,3 +4,9 @@
 *.pdf
 *.synctex.gz
 *.toc
+*.idx
+*.ilg
+*.ind
+*.fdb_latexmk
+*.fls
+.DS_Store
