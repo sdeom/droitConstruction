@@ -76,7 +76,7 @@
 \newcommand*{\jurisCourDeCas}[3][]{\CourDeCas* #2, \printdate{#3}\ifthenelse{\equal{#1}{}}{}{, \no#1}}% Numéro de chambre, date et en option no de pourvoi
 \newcommand*{\jurisCA}[2]{\CA* #1, \printdate{#2}}%Ville, date
 
-\newcommand*{\refArticle}[2]{#1.\,#2}
+\newcommand*{\refArticle}[2]{\mbox{#1.\,#2}}
 \newcommand*{\articleCodifie}[2]{\mbox{article~\refArticle{#1}{#2}}}
 \newcommand*{\articlesCodifies}[2]{\mbox{articles~\refArticle{#1}{#2}}}
 \newcommand*{\ArticleCodifie}[2]{\mbox{Article~\refArticle{#1}{#2}}}
